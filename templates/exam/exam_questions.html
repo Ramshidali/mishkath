@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <!-- Page Content-->
+    <div class="page-content">
+
+        <div class="container-fluid">
+            <!-- Page-Title -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="page-title-box">
+                        <div class="row">
+                            <div class="col">
+                                <h4 class="page-title">Exam Questions</h4>
+                            </div><!--end col-->
+                            
+                        </div><!--end row-->                                                              
+                    </div><!-- end page-title-box -->
+                </div><!--end col-->
+            </div><!--end row-->
+            <!-- end page title end breadcrumb -->
+
+            <div class="row">
+                {%for instance in exam_questions%}
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col">                      
+                                    <h4 class="card-title"><span style="color:blue;">#{{forloop.counter}}&nbsp;&nbsp;</span>{{instance.question}}</h4>  
+                                    <p class="text-muted mb-0" style="width:50%;float:left;">Subject Name : {{instance.exam.subject.name}}</p>                    
+                                    <p class="text-muted mb-0" style="width:50%;float:left;text-align:right;">Exam Type: {{instance.question_type}}</p>                    
+                                </div><!--end col-->                                                                             
+                            </div>  <!--end row-->                                  
+                        </div><!--end card-header-->
+
+                        {%if instance.question_type == 'objective'%}
+                        <div class="card-body">    
+                            
+                            <div class="checkbox checkbox-success checkbox-circle">
+                                <input id="checkbox110" type="checkbox" disabled="" {% if instance.correct_option == 'option_a' %} checked=""{%endif%}>
+                                <label for="checkbox110" style="color:black">
+                                    {{instance.option_a}}
+                                </label>
+                            </div>
+
+                            <div class="checkbox checkbox-success checkbox-circle">
+                                <input id="checkbox110" type="checkbox" disabled="" {% if instance.correct_option == 'option_b' %} checked=""{%endif%}>
+                                <label for="checkbox110" style="color:black">
+                                    {{instance.option_b}}
+                                </label>
+                            </div>
+
+                            <div class="checkbox checkbox-success checkbox-circle">
+                                <input id="checkbox110" type="checkbox" disabled="" {% if instance.correct_option == 'option_c' %} checked=""{%endif%}>
+                                <label for="checkbox110" style="color:black">
+                                    {{instance.option_c}}
+                                </label>
+                            </div>
+                            <div class="checkbox checkbox-success checkbox-circle">
+                                <input id="checkbox110" type="checkbox" disabled="" {% if instance.correct_option == 'option_d' %} checked=""{%endif%}>
+                                <label for="checkbox110" style="color:black">
+                                    {{instance.option_d}}
+                                </label>
+                            </div>
+                        </div><!--end card-body-->  
+                        {%endif%} 
+
+                        {%if instance.question_type == 'attachment' or 'descriptive_or_file'%}
+                        <div class="card-body">    
+                            {%if instance.attachment%}
+                                <a href="{{instance.attachment.url}}">Attached File</a>
+                            {%endif%}  
+                        </div>
+                        {%endif%}
+                    </div><!--end card-->
+                </div><!--end col-->
+                {% endfor %}
+            </div><!--end row-->
+
+            </div>            
+
+            
+        </div><!-- container -->
+    <!-- end page content -->
+{% endblock  %}
+
+        

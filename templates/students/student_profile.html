@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load users_templates_tags %}
+
+
+{% block content %}
+<div class="page-content">
+    <div class="container-fluid">
+
+        <!-- Page-Title -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="row">
+                        <div class="col">
+                            <h4 class="page-title">Profile</h4>
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="javascript:void(0);">Dastone</a></li>
+                                <li class="breadcrumb-item"><a href="javascript:void(0);">Pages</a></li>
+                                <li class="breadcrumb-item active">Profile</li>
+                            </ol>
+                        </div><!--end col-->
+                        <div class="col-auto align-self-center">
+                            <a href="pages-profile.html#" class="btn btn-sm btn-outline-primary" id="Dash_Date">
+                                <span class="day-name" id="Day_Name">Today:</span>&nbsp;
+                                <span class="" id="Select_date">Jan 11</span>
+                                <i data-feather="calendar" class="align-self-center icon-xs ml-1"></i>
+                            </a>
+                        </div><!--end col-->  
+                    </div><!--end row-->                                                              
+                </div><!--end page-title-box-->
+            </div><!--end col-->
+        </div><!--end row-->
+        <!-- end page title end breadcrumb -->
+
+<!--profile card start-->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                                                
+                    <div class="card-body">
+                        <div class="dastone-profile">
+                            <div class="row">
+                                <div class="col-lg-4 align-self-center mb-3 mb-lg-0">
+                                    <div class="dastone-profile-main">
+                                        <div class="dastone-profile-main-pic">
+                                            {%if profile_instance.gender == 'male'%}
+                                            <img src="{% static 'assets/images/users/user-5.jpg' %}" alt="" height="110" class="rounded-circle">
+                                            {%elif profile_instance.gender == 'female'%}
+                                            <img src="{% static 'assets/images/users/user-4.jpg' %}" alt="" height="110" class="rounded-circle">
+                                            {%endif%}
+                                            <span class="dastone-profile_main-pic-change">
+                                                <i class="fas fa-camera"></i>
+                                            </span>
+                                        </div>
+                                        <div class="dastone-profile_user-detail">
+                                            <h5 class="dastone-user-name">{{profile_instance.name}}</h5>                                                        
+                                            <p class="mb-0 dastone-user-name-post">{{profile_instance.grade_batch.grade}}<sup>th</sup> Grade</p>                                                        
+                                            <p class="mb-0 dastone-user-name-post">{{profile_instance.grade_batch.batch.title}}</p>                                                        
+                                        </div>
+                                    </div>                                                
+                                </div><!--end col-->
+                                
+                                <div class="col-lg-4 ml-auto align-self-center">
+                                    <ul class="list-unstyled personal-detail mb-0">
+                                        <li class=""><i class="las la-phone mr-2 text-secondary font-22 align-middle"></i> <b> phone </b> : {{profile_instance.phone}}</li>
+                                        <li class="mt-2"><i class="las la-envelope text-secondary font-22 align-middle mr-2"></i> <b> Email </b> : {{profile_instance.email}}</li>
+                                        <li class="mt-2"><i class="dripicons-calendar text-secondary font-22 align-middle mr-2"></i> <b> DOB </b> : {{profile_instance.dob}}</li>
+                                        </li>                                                   
+                                    </ul>
+                                </div><!--end col-->
+                                <div class="col-lg-4 ml-auto align-self-center">
+                                </div><!--end col-->
+                                
+
+                            </div><!--end row-->
+                        </div><!--end f_profile-->                                                                                
+                    </div><!--end card-body-->          
+                </div> <!--end card-->    
+            </div><!--end col-->
+        </div><!--end row-->
+        <!--profile card end-->
+
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card"> 
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">                      
+                                <h4 class="card-title">Subject Details</h4>                      
+                            </div><!--end col-->                                        
+                        </div>  <!--end row-->                                  
+                    </div><!--end card-header-->
+                    <div class="card-body" style="max-height:400px;overflow-y: auto;">
+
+                        {% for topic_details in student_topic_instance %}
+                        <div class="border-bottom-dashed mb-4">
+                            <div class="media mb-3">
+                                {%if topic_details.topic.image%}
+                                    <img src="{{topic_details.topic.image.url}}" height="40" class="mr-3 align-self-center rounded" alt="...">
+                                {%endif%}
+                                <div class="media-body align-self-center"> 
+                                    <h6 class="mt-0 mb-1">{{topic_details.topic.lesson.subject.name}}</h6>
+                                    {% get_topic_percentage profile_instance.pk topic_details.topic.lesson.subject.pk  as topic_percentage %}
+                                    {% comment %} <p class="text-muted mb-1"><span class="text-success">+4.8%</span> From Yesterday</p> {% endcomment %}
+                                    <small class="float-right text-muted ml-3 font-11">{{topic_percentage}}%</small>
+                                    <div class="progress mt-2" style="height:4px;">
+                                        <div class="progress-bar bg-warning-50" role="progressbar" style="width: {{topic_percentage}}%; border-radius:5px;" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>                                                                                          
+                                </div><!--end media body-->
+                            </div>                                        
+                        </div> 
+                        {%endfor%}
+                    </div><!--end card-body--> 
+                </div><!--end card-->   
+            </div><!-- end col-->
+
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Overall performance</h4>
+                    </div><!--end card-header-->
+                    <div class="card-body">
+                        <div class="chart-demo m-0">
+                            <div id="apex_radialbar3" class="apex-charts"></div>
+                        </div>                                        
+                    </div><!--end card-body-->
+                </div><!--end card-->
+            </div><!--end col-->
+
+
+        </div>
+
+
+
+
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load exam_templates_tags %}
+
+
+{% block content %}
+<div class="page-content">
+    <div class="container-fluid">
+
+        <!-- Page-Title -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="row">
+                        <div class="col">
+                            <h4 class="page-title">Lesson</h4>
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="javascript:void(0);">Mishkath</a></li>
+                                <li class="breadcrumb-item"><a href="javascript:void(0);">Exam</a></li>
+                                {% comment %} <li class="breadcrumb-item active">{{_instances.title}}</li> {% endcomment %}
+                            </ol>
+                        </div><!--end col-->
+                        <div class="col-auto align-self-center">
+                            <a href="pages-profile.html#" class="btn btn-sm btn-outline-primary" id="Dash_Date">
+                                <span class="day-name" id="Day_Name">Today:</span>&nbsp;
+                                <span class="" id="Select_date">Jan 11</span>
+                                <i data-feather="calendar" class="align-self-center icon-xs ml-1"></i>
+                            </a>
+                        </div><!--end col-->  
+                    </div><!--end row-->                                                              
+                </div><!--end page-title-box-->
+            </div><!--end col-->
+        </div><!--end row-->
+        <!-- end page title end breadcrumb -->
+
+<!--profile card start-->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                                                
+                    <div class="card-body">
+                        <div class="dastone-profile">
+                            <div class="row">
+                                <div class="col-lg-4 align-self-center mb-3 mb-lg-0">
+                                    <div class="dastone-profile-main">
+                                       
+                                        <div class="dastone-profile_user-detail">
+                                        <h6 class="dastone-user-name">Subject :&nbsp;&nbsp;{{exam_instances.subject.name}}</h6>                                                        
+                                            {% comment %} <p class="mb-0 dastone-user-name-post">{{exam_instances.subject.name}}</p>                                                        {% endcomment %}
+                                        </div>
+                                    </div>                                                
+                                </div><!--end col-->
+
+
+                            </div><!--end row-->
+                        </div><!--end f_profile-->                                                                                
+                    </div><!--end card-body-->          
+                </div> <!--end card-->    
+            </div><!--end col-->
+        </div><!--end row-->
+
+        <div class="row">
+
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col-sm-8">                      
+                                <h4 class="card-title">Questions</h4>                      
+                            </div><!--end col-->
+                            <div class="col-sm-4">                      
+                                <a class="nav-link p-0" href="{% url 'exam:create_exam_question_without_exam' exam_pk=exam_instances.pk %}" style="text-align:right;">
+                                    <button type="button" class="btn btn-outline-primary waves-effect waves-light" style="padding:1px 2px;">Create Question</button> 
+                                </a>                 
+                            </div><!--end col-->
+                        </div>  <!--end row-->                                  
+                    </div><!--end card-header-->
+                    <div class="card-body" style="max-height:400px;overflow-y: auto;">
+                        <ul class="list-group custom-list-group">
+
+                            {% get_questions_in_exam exam_instances.pk  as questions %}
+                            {% for question in questions %}                            
+                            <li class="list-group-item align-items-center d-flex justify-content-between">
+                                <div class="media">
+                                    <div class="media-body align-self-center"> 
+                                        <h6 class="m-0"><span style="color:blue;">#{{forloop.counter}}&nbsp;&nbsp;</span>{{question.question}}</h6>
+                                        {% comment %} <p class="font-10 text-primary">Lesson : {{topic.lesson.name}}</p> {% endcomment %}
+                                    </div>
+                                </div>
+                                <div class="align-self-center">
+                                    {% comment %} <a href="{% url 'activity:view_activity' pk=activity.pk %}?redirect_to=activity_view"><i class="las la-pen text-info font-18"></i></a> {% endcomment %}
+                                    <a href="{% url 'exam:update_exam_question_without_exam' pk=question.pk %}?redirect_to=view_exam"><i class="las la-pen text-info font-18"></i></a>
+                                    <a href="{% url 'exam:delete_exam_question' pk=question.pk %}?redirect_to=view_exam"><i class="las la-trash-alt text-danger font-18"></i></a>
+                                </div>
+
+                            </li>
+                            {%endfor%}
+                            
+                        </ul>                                    
+                    </div><!--end card-body-->
+                </div><!--end card--> 
+            </div> <!--end col-->
+
+
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col-sm-8">                      
+                                <h4 class="card-title">Attended Students</h4>                      
+                            </div><!--end col-->
+                        </div>  <!--end row-->                                  
+                    </div><!--end card-header-->
+                    
+                    <div class="card-body" style="max-height:400px;overflow-y: auto;">
+                        <ul class="list-group custom-list-group">
+
+                            {% get_entrolled_exams exam_instances.pk  as students %}
+                            {% for student in students %}
+                            <li class="list-group-item align-items-center d-flex justify-content-between">
+                                <div class="media">
+                                    {% comment %} <img src="{{activity.student_id.image.url}}static/assets/images/users/user-1.jpg" height="40" class="mr-3 align-self-center rounded" alt="..."> {% endcomment %}
+                                    <img src="{% static 'assets/images/users/user-1.jpg' %}" height="40" class="mr-3 align-self-center rounded" alt="...">
+                                    <div class="media-body align-self-center"> 
+                                        <h6 class="m-0">{{student.student.name}}</h6>
+                                        <p class="font-10 text-primary" style="margin:0;">Score : {{student.lesson.name}}</p>
+                                    </div>
+                                </div>
+                            </li>
+                            {%endfor%}
+                            
+                        </ul>                                    
+                    </div><!--end card-body--> 
+                </div><!--end card--> 
+            </div> <!--end col-->
+
+        </div><!--row closed-->
+
+        
+
+    </div>
+</div>
+
+{% endblock content %}

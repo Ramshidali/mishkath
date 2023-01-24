@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8" />
+        <title>Mishkath | {{page_name}}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="" name="author" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        {% load static %}
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+
+        <!-- App css -->
+        <link href="{% static 'assets/plugins/select2/select2.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/css/metisMenu.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/plugins/daterangepicker/daterangepicker.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/plugins/timepicker/bootstrap-material-datetimepicker.css' %}" rel="stylesheet">
+        <link href="{% static 'assets/css/app.min.css' %}" rel="stylesheet" type="text/css" />
+        
+        <link href="{% static 'assets/sweet/sweetalert2.css' %}" rel="stylesheet" type="text/css" />
+        
+
+    </head>
+
+    <body>
+        <!-- Left Sidenav -->
+        {% include 'includes/sidebar/super_admin_side_bar.html'%}
+        <!-- end left-sidenav-->        
+
+        <div class="page-wrapper">
+
+            {%include 'includes/topbar/super_admin_top_bar.html' %}
+
+            {% block content %}
+
+            {% endblock  %} 
+
+        </div>
+        <!-- end page-wrapper -->
+
+        
+        {% include 'includes/js.html' %}
+        {% block static %}
+        {% endblock %}
+        
+    </body>
+
+</html>

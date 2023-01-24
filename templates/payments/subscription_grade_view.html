@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load payments_templates_tags %}
+
+
+{% block content %}
+<div class="page-content">
+    <div class="container-fluid">
+
+        <!-- Page-Title -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="row">
+                        <div class="col">
+                            <h4 class="page-title">Subscription Grade</h4>
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="javascript:void(0);">Dastone</a></li>
+                                <li class="breadcrumb-item"><a href="javascript:void(0);">Pages</a></li>
+                                <li class="breadcrumb-item active">Profile</li>
+                            </ol>
+                        </div><!--end col-->
+                        <div class="col-auto align-self-center">
+                            <a href="pages-profile.html#" class="btn btn-sm btn-outline-primary" id="Dash_Date">
+                                <span class="day-name" id="Day_Name">Today:</span>&nbsp;
+                                <span class="" id="Select_date">Jan 11</span>
+                                <i data-feather="calendar" class="align-self-center icon-xs ml-1"></i>
+                            </a>
+                        </div><!--end col-->  
+                    </div><!--end row-->                                                              
+                </div><!--end page-title-box-->
+            </div><!--end col-->
+        </div><!--end row-->
+        <!-- end page title end breadcrumb -->
+
+<!--profile card start-->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                                                
+                    <div class="card-body">
+                        <div class="dastone-profile">
+                            <div class="row">
+                                <div class="col-lg-4 align-self-center mb-3 mb-lg-0">
+                                    <div class="dastone-profile-main">
+                                        <div class="dastone-profile_user-detail">
+                                            <p class="mb-0 " style="font-size: 15px;font-weight: bold;">Batch : &nbsp;{{instance.grade_batch.batch.title}}</p>                                                        
+                                            <p class="mb-0 " style="font-size: 15px;font-weight: bold;">Grade : &nbsp;{{instance.grade_batch.grade.name}}</p>                                                        
+                                            <p class="mb-0 dastone-user-name-post">{{instance.description}}</p>                                                       
+                                        </div>
+                                    </div>                                                
+                                </div><!--end col-->
+                                
+                                <div class="col-lg-4 ml-auto align-self-center">
+                                    {% comment %} {% get_total_status subject_instance.pk  as status %} {% endcomment %}
+                                    <ul class="list-unstyled personal-detail mb-0">
+                                        {% comment %} <li class="mt-2"><b> Total Lesson </b> : {{status.lesson_instances_count}}</li>
+                                        <li class="mt-2"><b> Total Topics </b> : {{status.topic_instances_count}}</li>
+                                        <li class="mt-2"><b> Last Added Topic </b> : {{status.latest_added_topic}}</li>
+                                        </li>                                                    {% endcomment %}
+                                    </ul>
+                                </div><!--end col-->
+                                <div class="col-lg-4 ml-auto align-self-center">
+                                </div><!--end col-->
+                                
+
+                            </div><!--end row-->
+
+                            
+
+                        </div><!--end f_profile-->                                                                                
+                    </div><!--end card-body-->          
+                </div> <!--end card-->    
+            </div><!--end col-->
+        </div><!--end row-->
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col-sm-8">                      
+                                <h4 class="card-title">Subscription Fee</h4>                      
+                            </div><!--end col-->
+                            <div class="col-sm-4">                      
+                                <a class="nav-link p-0" href="{% url 'payments:create_subscription_grade_fee' pk='' sub_pk=instance.pk %}" style="text-align:right;">
+                                    <button type="button" class="btn btn-outline-primary waves-effect waves-light" style="padding:1px 4px;"><i class="ti-plus"></i>&nbsp; Add</button> 
+                                </a>                 
+                            </div><!--end col-->
+                        </div>  <!--end row-->                                  
+                    </div><!--end card-header-->
+                    <div class="card-body" style="max-height:400px;overflow-y: auto;">
+                        <ul class="list-group custom-list-group">
+
+                            {% get_subscription_grade_fee instance.pk  as fees %}
+                            {% for fee in fees %}                            
+                            <li class="list-group-item align-items-center d-flex justify-content-between">
+                                <div class="media">
+                                    <div class="media-body align-self-center"> 
+                                        <h6 class="m-0">For {{fee.month}} Month</h6>
+                                    </div><!--end media body-->
+                                </div>
+
+                                <div class="media">
+                                    <div class="media-body align-self-center"> 
+                                        <h6 class="m-0">Rs: {{fee.rate}}/-</h6>
+                                    </div><!--end media body-->
+                                </div>
+
+                                <div class="align-self-center" style="display: flex;">
+                                    <a class="dropdown-item" href="{% url 'payments:create_subscription_grade_fee' pk=fee.pk sub_pk='' %}" style="padding: 0 0 0 8px;"><i class="las la-pen text-info font-16"></i></a>
+                                    <a class="dropdown-item" href="{% url 'payments:delete_subscription_grade_fee' pk=fee.pk %}" style="padding: 0 0 0 8px;"><i class="las la-trash-alt text-danger font-16"></i></a>
+                                </div>
+                            </li>
+                            {%endfor%}
+                            
+                        </ul>                                    
+                    </div><!--end card-body--> 
+                </div><!--end card--> 
+            </div> <!--end col-->
+
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col-sm-8">                      
+                                <h4 class="card-title">Subscribed Students</h4>                      
+                            </div><!--end col-->
+                            <div class="col-sm-4">                      
+                                <a class="nav-link p-0" href="{% url 'payments:create_student_subscription' pk='' sub_pk=instance.pk %}" style="text-align:right;">
+                                    <button type="button" class="btn btn-outline-primary waves-effect waves-light" style="padding:1px 4px;"><i class="ti-plus"></i>&nbsp; Add</button> 
+                                </a>                 
+                            </div><!--end col-->
+                        </div>  <!--end row-->                                  
+                    </div><!--end card-header-->
+                    <div class="card-body" style="max-height:400px;overflow-y: auto;">
+                        <ul class="list-group custom-list-group">
+
+                            {% get_subscribed_students instance.pk  as students %}
+                            {% for student in students %}                            
+                            <li class="list-group-item align-items-center d-flex justify-content-between" style="padding: 8px 0;">
+                                <div class="media">
+                                    {% comment %} <img src="{{topic.image.url}}" height="40" class="mr-3 align-self-center rounded" alt="..."> {% endcomment %}
+                                    <div class="media-body align-self-center"> 
+                                        <h6 class="m-0">{{student.profile.name}}</h6>
+                                        <p class="font-10 text-primary" style="margin-bottom: 0;">Subscribed For {{student.subscription_grade_fee.month}} Month Rs :{{student.subscription_grade_fee.rate}}/-</p>
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <div class="media-body align-self-center"> 
+                                        <h6 class="m-0" style="display: flex; justify-content: space-between;"><span >From &nbsp;</span><div> :&nbsp;{{student.subscribed_date | date:"M d, Y"}}</div></h6>
+                                        {% get_subscription_end_date student.profile.pk as end_date %}
+                                        <h6 class="m-0" style="display: flex; justify-content: space-between;"><span >To &nbsp;</span><div style="color:{{end_date.color}}"> :&nbsp;{{end_date.date | date:"M d, Y"}}</div></h6>
+                                    </div>
+                                </div>
+
+                            </li>
+                            {%endfor%}
+                            
+                        </ul>                                    
+                    </div><!--end card-body--> 
+                </div><!--end card--> 
+            </div> <!--end col-->
+
+
+        <!--profile card end-->
+
+
+
+    </div>
+</div>
+
+{% endblock content %}

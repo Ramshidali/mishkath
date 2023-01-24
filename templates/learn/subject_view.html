@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load learn_templates_tags %}
+
+
+{% block content %}
+<div class="page-content">
+    <div class="container-fluid">
+
+        <!-- Page-Title -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="row">
+                        <div class="col">
+                            <h4 class="page-title">Subject</h4>
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="javascript:void(0);">Dastone</a></li>
+                                <li class="breadcrumb-item"><a href="javascript:void(0);">Pages</a></li>
+                                <li class="breadcrumb-item active">Profile</li>
+                            </ol>
+                        </div><!--end col-->
+                        <div class="col-auto align-self-center">
+                            <a href="pages-profile.html#" class="btn btn-sm btn-outline-primary" id="Dash_Date">
+                                <span class="day-name" id="Day_Name">Today:</span>&nbsp;
+                                <span class="" id="Select_date">Jan 11</span>
+                                <i data-feather="calendar" class="align-self-center icon-xs ml-1"></i>
+                            </a>
+                        </div><!--end col-->  
+                    </div><!--end row-->                                                              
+                </div><!--end page-title-box-->
+            </div><!--end col-->
+        </div><!--end row-->
+        <!-- end page title end breadcrumb -->
+
+<!--profile card start-->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                                                
+                    <div class="card-body">
+                        <div class="dastone-profile">
+                            <div class="row">
+                                <div class="col-lg-4 align-self-center mb-3 mb-lg-0">
+                                    <div class="dastone-profile-main">
+                                        <div class="dastone-profile-main-pic">
+                                            {% comment %} <img src="{% static 'assets/images/users/user-4.jpg' %}" alt="" height="110" class="rounded-circle"> {% endcomment %}
+                                            {%if subject_instance.image%}
+                                                <img src="{{subject_instance.image.url}}" class="img-thumbnail"></td>
+                                            {%endif%}
+                    
+                                        </div>
+                                        <div class="dastone-profile_user-detail">
+                                            <h6 class="dastone-user-name">{{subject_instance.name}}</h6>                                                        
+                                            <p class="mb-0 dastone-user-name-post">{{subject_instance.description}}</p>                                                       
+                                        </div>
+                                    </div>                                                
+                                </div><!--end col-->
+                                
+                                <div class="col-lg-4 ml-auto align-self-center">
+                                    {% get_total_status subject_instance.pk  as status %}
+                                    <ul class="list-unstyled personal-detail mb-0">
+                                        <li class="mt-2"><b> Total Lesson </b> : {{status.lesson_instances_count}}</li>
+                                        <li class="mt-2"><b> Total Topics </b> : {{status.topic_instances_count}}</li>
+                                        <li class="mt-2"><b> Last Added Topic </b> : {{status.latest_added_topic}}</li>
+                                        </li>                                                   
+                                    </ul>
+                                </div><!--end col-->
+                                <div class="col-lg-4 ml-auto align-self-center">
+                                </div><!--end col-->
+                                
+
+                            </div><!--end row-->
+
+                            
+
+                        </div><!--end f_profile-->                                                                                
+                    </div><!--end card-body-->          
+                </div> <!--end card-->    
+            </div><!--end col-->
+        </div><!--end row-->
+
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col-sm-8">                      
+                                <h4 class="card-title">Lessons</h4>                      
+                            </div><!--end col-->
+                            <div class="col-sm-4">                      
+                                <a class="nav-link p-0" href="{% url 'learn:create_lesson_with_subject' sub_pk=subject_instance.pk %}" style="text-align:right;">
+                                    <button type="button" class="btn btn-outline-primary waves-effect waves-light" style="padding:1px 4px;">add lesson</button> 
+                                </a>                 
+                            </div><!--end col-->
+                        </div>  <!--end row-->                                  
+                    </div><!--end card-header-->
+                    <div class="card-body" style="max-height:400px;overflow-y: auto;">
+                        <ul class="list-group custom-list-group">
+
+                            {% get_lessons_in_subject subject_instance.pk  as lessons %}
+                            {% for lesson in lessons %}                            
+                            <li class="list-group-item align-items-center d-flex justify-content-between">
+                                <div class="media">
+                                    <img src="{{lesson.image.url}}" height="40" class="mr-2 align-self-center rounded" alt="...">
+                                    <div class="media-body align-self-center"> 
+                                        <h6 class="m-0">{{lesson.name}}</h6>
+                                    </div><!--end media body-->
+                                </div>
+                                <div class="align-self-center">
+
+                                    <a href="{% url 'learn:create_topic_with_lesson' lesson_pk=lesson.pk %}">
+                                    <span class="badge badge-outline-primary" style="font-size:12px !important">create topic</span>
+                                    </a>
+
+                                    <a class="dropdown-toggle arrow-none" id="dLabel11" data-toggle="dropdown" href="tables-basic.html#" role="button" aria-haspopup="false" aria-expanded="false">
+                                        <i class="las la-ellipsis-v font-16 text-muted"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dLabel11">
+                                        <a class="dropdown-item" href="{% url 'learn:view_lesson' pk=lesson.pk %}"><i class="las la-eye text-info font-14"></i>&nbsp;&nbsp;View</a>
+                                        <a class="dropdown-item" href="{% url 'learn:edit_lesson' lesson_pk=lesson.pk %}"><i class="las la-pen text-info font-14"></i>&nbsp;&nbsp;Edit</a>
+                                        <a class="dropdown-item" href="{% url 'learn:delete_lesson' lesson_pk=lesson.pk %}?redirect_to=subject"><i class="las la-trash-alt text-danger font-14"></i>&nbsp;&nbsp;Delete</a>
+                                    </div>
+                                    
+                                    <div class="apexchart-wrapper w-30 align-self-center">                                                    
+                                        <div id="dash_spark_2" class="chart-gutters"></div>
+                                    </div>
+                                </div>
+                            </li>
+                            {%endfor%}
+                            
+                        </ul>                                    
+                    </div><!--end card-body--> 
+                </div><!--end card--> 
+            </div> <!--end col-->
+
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col-sm-8">                      
+                                <h4 class="card-title">Topics</h4>                      
+                            </div><!--end col-->
+                            <div class="col-sm-4">                      
+                                <a class="nav-link p-0" href="{% url 'learn:topics' %}" style="text-align:right;">
+                                    <button type="button" class="btn btn-outline-primary waves-effect waves-light" style="padding:1px 4px;">View all Topics</button> 
+                                </a>                 
+                            </div><!--end col-->
+                        </div>  <!--end row-->                                  
+                    </div><!--end card-header-->
+                    <div class="card-body" style="max-height:400px;overflow-y: auto;">
+                        <ul class="list-group custom-list-group">
+
+                            {% get_topics_in_subject subject_instance.pk  as topics %}
+                            {% for topic in topics %}                            
+                            <li class="list-group-item align-items-center d-flex justify-content-between">
+                                <div class="media">
+                                    <img src="{{topic.image.url}}" height="40" class="mr-3 align-self-center rounded" alt="...">
+                                    <div class="media-body align-self-center"> 
+                                        <h6 class="m-0">{{topic.name}}</h6>
+                                        <p class="font-10 text-primary">Lesson : {{topic.lesson.name}}</p>
+                                    </div>
+                                </div>
+
+                                <div class="align-self-center">
+                                    {% comment %} <a href="{% url 'learn:create_topic' pk=topic.pk sub_pk=topic.lesson.subject.pk %}"><i class="las la-eye text-info font-18"></i></a> {% endcomment %}
+                                    <a href="{% url 'learn:create_topic' pk=topic.pk sub_pk=topic.lesson.subject.pk %}"><i class="las la-pen text-info font-18"></i></a>
+                                    <a href="{% url 'learn:delete_topic' pk=topic.pk sub_pk=topic.lesson.subject.pk %}"><i class="las la-trash-alt text-danger font-18"></i></a>
+                                </div>
+
+                            </li>
+                            {%endfor%}
+                            
+                        </ul>                                    
+                    </div><!--end card-body--> 
+                </div><!--end card--> 
+            </div> <!--end col-->
+
+
+        <!--profile card end-->
+
+
+
+    </div>
+</div>
+
+{% endblock content %}

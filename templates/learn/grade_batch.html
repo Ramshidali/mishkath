@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load users_templates_tags %}
+
+{% block content %}
+
+<style>
+    #btn-outline-primary:hover {
+        color: #fff;
+        background-color: none !important; 
+    }
+</style>
+
+    <!-- Page Content-->
+    <div class="page-content">
+
+        <div class="container-fluid">
+            <!-- Page-Title -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="page-title-box">
+                        <div class="row">
+                            <div class="col">
+                                <h4 class="page-title">Grade Batches</h4>
+   
+                            </div><!--end col-->
+                            
+                        </div><!--end row-->                                                              
+                    </div><!-- end page-title-box -->
+                </div><!--end col-->
+            </div><!--end row-->
+            <!-- end page title end breadcrumb -->
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">List view</h4>
+                        </div>
+                        <!--end card-header-->
+                        <div class="card-body">
+                            {% comment %} <div class="button-items text-right">
+                                <a href="#"><button type="button" class="btn btn-pink btn-icon-square-sm"><i class="fas fa-plus"></i></button></a>
+                            </div> {% endcomment %}
+                            
+                            
+                            <div class="table-responsive">
+                                <table class="table mb-0">
+                                    <thead>
+                                        
+                                        <tr>
+                                            <th>SL.No</th>
+                                            <th>Grade</th>
+                                            <th>Batch</th>
+                                            <th>Unlocked Topics</th>
+                                            <th class="text-right">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for instance in instances %}
+                                        <tr>
+                                            <td>{{forloop.counter}}</td>
+                                            <td>{{instance.grade.name}}</td>                                            
+                                            <td>{{instance.batch.title}}</td>
+                                            <td>
+                                            {% for topic in instance.unlocked_topic.all %}
+                                                <span>{{topic.name}}, </span>
+                                            {% endfor %}
+                                            </td>
+                                            {% comment %} <td>{{instance.unlocked_topic}}</td> {% endcomment %}
+
+                                            <td class="text-right">
+                                                {% comment %} <a href="{% url 'learn:view_batch' pk=instance.pk %}"><i class="las la-eye text-info font-18"></i></a> {% endcomment %}
+                                                <a href="{% url 'learn:update_grade_batch' pk=instance.pk %}"><i class="las la-pen text-info font-18"></i></a>
+                                                <a href="{% url 'learn:delete_grade_batch' pk=instance.pk %}" data-toggle="modal" data-target="#exampleModalDefault"><i class="las la-trash-alt text-danger font-18"></i></a>
+                                                {% comment %} <a href="#" data-toggle="modal" data-target="#exampleModalDefault"><i class="las la-trash-alt text-danger font-18"></i></a> {% endcomment %}
+                                                {% comment %} <button type="button" class="btn btn-outline-primary btn-sm" id="btn-outline-primary" data-toggle="modal" data-target="#exampleModalSmall" style="border:none;">
+                                                    <i class="las la-trash-alt text-danger font-18"></i>
+                                                </button> {% endcomment %}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                               
+                                    </tbody>
+                                </table>
+                                <!--end /table-->
+                            </div>
+                            <!--end /tableresponsive-->
+                            <!-- pagination -->
+                            
+                        </div>
+                        <!--end card-body-->
+                    </div>
+                    <!--end card-->
+                </div> <!-- end col -->
+            </div>
+
+            <div class="modal fade bd-example-modal-sm" id="exampleModalSmall" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h6 class="modal-title m-0" id="mySmallModalLabel">Small Modal</h6>
+                            <button type="button" class="close " data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="la la-times"></i></span>
+                            </button>
+                        </div><!--end modal-header-->
+                        <div class="modal-body text-center">
+                            <img src="assets/images/users/user-5.jpg" alt="" class="thumb-lg rounded-circle">
+                            <h4 class="mb-1">Good Morning!</h4> 
+                            <p class="mb-0 text-muted">Hi, Aaron Gish ! Congratulations.</p>                                                   
+                        </div><!--end modal-body-->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-xs" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary btn-xs">Save changes</button>
+                        </div><!--end modal-footer-->
+                    </div><!--end modal-content-->
+                </div><!--end modal-dialog-->
+            </div><!--end modal-->
+
+
+
+
+
+        </div><!-- container -->
+    <!-- end page content -->
+{% endblock content %}
+
+        

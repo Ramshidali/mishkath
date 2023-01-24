@@ -1,0 +1,13 @@
+SubscrptionGrade
+	grade => fk
+	descrption => text
+	
+SubscrbtionGradeFee
+	month => int
+	rate => int
+	subscrptionGrade => fk
+	
+
+StudentSubscription:
+	profile => fk
+	subscrptionGradeFee => fk

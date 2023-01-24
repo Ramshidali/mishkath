@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load users_templates_tags %}
+
+{% block content %}
+    <!-- Page Content-->
+    <div class="page-content">
+
+        <div class="container-fluid">
+            <!-- Page-Title -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="page-title-box">
+                        <div class="row">
+                            <div class="col">
+                                <h4 class="page-title">Batches</h4>
+   
+                            </div><!--end col-->
+                            
+                        </div><!--end row-->                                                              
+                    </div><!-- end page-title-box -->
+                </div><!--end col-->
+            </div><!--end row-->
+            <!-- end page title end breadcrumb -->
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">List view</h4>
+                        </div>
+                        <!--end card-header-->
+                        <div class="card-body">
+                            {% comment %} <div class="button-items text-right">
+                                <a href="#"><button type="button" class="btn btn-pink btn-icon-square-sm"><i class="fas fa-plus"></i></button></a>
+                            </div> {% endcomment %}
+                            
+                            
+                            <div class="table-responsive">
+                                <table class="table mb-0">
+                                    <thead>
+                                        
+                                        <tr>
+                                            <th>SL.No</th>
+                                            <th>Title</th>
+                                            <th>From</th>
+                                            <th>To</th>
+                                            <th>Status</th>
+                                            <th class="text-right">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for instance in instances %}
+                                        <tr>
+                                            <td>{{forloop.counter}}</td>
+                                            <td>{{instance.title}}</td>                                            
+                                            <td>{{instance.from_date}}</td>
+                                            <td>{{instance.to_date}}</td>
+                                            {% if instance.is_active %}
+                                            <td><span class="badge badge-outline-success badge-pill" style="font-size: 13px !important;">Active</span></td>
+                                            {% else %}
+                                            <td><span class="badge badge-outline-warning" style="font-size: 13px !important;">Pending</span></td>
+                                            {% endif %}
+
+                                            <td class="text-right">
+                                                {% comment %} <a href="{% url 'learn:view_batch' pk=instance.pk %}"><i class="las la-eye text-info font-18"></i></a> {% endcomment %}
+                                                <a href="{% url 'learn:create_batch' pk=instance.pk %}"><i class="las la-pen text-info font-18"></i></a>
+                                                <a href="{% url 'learn:delete_batch' pk=instance.pk %}"><i class="las la-trash-alt text-danger font-18"></i></a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                               
+                                    </tbody>
+                                </table>
+                                <!--end /table-->
+                            </div>
+                            <!--end /tableresponsive-->
+                            <!-- pagination -->
+                            
+                        </div>
+                        <!--end card-body-->
+                    </div>
+                    <!--end card-->
+                </div> <!-- end col -->
+            </div>
+        </div><!-- container -->
+    <!-- end page content -->
+{% endblock content %}
+        
